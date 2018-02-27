@@ -26,11 +26,11 @@ object Main extends App with  Directives with CustomJsonSprySupport {
         }
       }
     }~
-      pathPrefix("init") {
+      pathPrefix("initialization") {
           pathEnd {
             post {
-              entity(as[Start]) { initData =>
-                Mails ? Start(initData.hostName, initData.smtpPort, initData.sSLOnConnect)
+              entity(as[Initialization]) { initData =>
+                Mails ? Initialization(initData.hostName, initData.smtpPort, initData.sSLOnConnect)
                 complete(StatusCodes.OK)
               }
             }

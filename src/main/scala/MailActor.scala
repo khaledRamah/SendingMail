@@ -5,19 +5,19 @@ import org.apache.commons.mail.DefaultAuthenticator
 import org.apache.commons.mail.{Email, SimpleEmail}
 
 case class Authentication(userName: String, passWord: String)
-case class Start(hostName: String, smtpPort: Int, sSLOnConnect: Boolean)
+case class Initialization(hostName: String, smtpPort: Int, sSLOnConnect: Boolean)
 case class NewMail(subject: String, message: String, to: List[String])
 object Done
 class MailActor extends Actor {
   var auth= Authentication("","")
-  var mailData= Start("",0,true)
+  var mailData= Initialization("",0,sSLOnConnect = true)
   override def receive: Receive = {
     case Authentication(userName: String, passWord: String) =>
       auth=Authentication(userName,passWord)
       sender() ! Done
 
-    case Start(hostName: String, smtpPort: Int, sSLOnConnect: Boolean) =>
-      mailData=Start(hostName,smtpPort,sSLOnConnect)
+    case Initialization(hostName: String, smtpPort: Int, sSLOnConnect: Boolean) =>
+      mailData=Initialization(hostName,smtpPort,sSLOnConnect)
       sender() ! Done
 
     case NewMail(subject: String, message: String, to: List[String]) =>
